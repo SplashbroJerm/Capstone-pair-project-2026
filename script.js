@@ -6,15 +6,31 @@ img.src = "squirtle-sprite2.png"
 
 
 let x = -90;
-let y = 460;
+let y = 650;
 let vx = 0;
 let vy = 0;
-function update(){
+let jumpForce = -10;
+let grounded = false;
+const gravity = 0.5;
+const groundY = 170;
+
+function update() {
+    if (!grounded) {
+      vy += gravity;
+    }
     ctx.clearRect(0, 0, player.clientWidth, player.height);
     x += vx;
     y += vy;
     ctx.drawImage(img, x, y, 300, 150);
+    if (y + player.height > groundY) {
+      y = groundY - player.height;
+      vy = 0;
+      grounded = true;
+    } else {
+      grounded = false;
+    }
     requestAnimationFrame(update);
+
 }
 
 addEventListener("keydown", function(e){
@@ -28,7 +44,9 @@ addEventListener("keyup", function(e){
     if(e.code == 'KeyD' || e.code == "ArrowRight")vx = 0;
     if(e.code == 'KeyA' || e.code == "ArrowLeft")vx = 0;
     if(e.code == 'KeyS' || e.code == "ArrowDown")vy = 0;
-    if(e.code == 'KeyW' || e.code == "ArrowUp")vy = 5;
+    if (e.code == 'KeyW' || e.code == "ArrowUp") {
+        vy = 5;
+    }
 });
 
 
