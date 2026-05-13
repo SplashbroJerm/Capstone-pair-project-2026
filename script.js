@@ -12,18 +12,19 @@ let vy = 0;
 let jumpForce = -10;
 let grounded = false;
 const gravity = 0.5;
-const groundY = 170;
+const groundY = 650;
+const spriteH = 150;
 
 function update() {
     if (!grounded) {
       vy += gravity;
     }
-    ctx.clearRect(0, 0, player.clientWidth, player.height);
+    ctx.clearRect(0, 0, player.width, player.height);
     x += vx;
     y += vy;
-    ctx.drawImage(img, x, y, 300, 150);
-    if (y + player.height > groundY) {
-      y = groundY - player.height;
+    ctx.drawImage(img, x, y, 300, spriteH);
+    if (y + spriteH > groundY) {
+      y = groundY - spriteH;
       vy = 0;
       grounded = true;
     } else {
@@ -51,4 +52,4 @@ addEventListener("keyup", function(e){
 
 
 
-update();
+img.onload = update;
