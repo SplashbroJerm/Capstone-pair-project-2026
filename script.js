@@ -37,17 +37,17 @@ function update() {
 addEventListener("keydown", function(e){
     if(e.code == 'KeyD' || e.code == "ArrowRight") vx = 5;
     if(e.code == 'KeyA' || e.code == "ArrowLeft") vx = -5;
-    if(e.code == 'KeyS' || e.code == "ArrowDown")vy = 5;
-    if(e.code == 'KeyW' || e.code == "ArrowUp")vy = -5;
+    if(e.code == 'KeyS' || e.code == "ArrowDown") vy = 5;
+    if((e.code == 'KeyW' || e.code == "ArrowUp") && grounded) {
+        vy = jumpForce;
+        grounded = false;
+    }
 });
 
 addEventListener("keyup", function(e){
-    if(e.code == 'KeyD' || e.code == "ArrowRight")vx = 0;
-    if(e.code == 'KeyA' || e.code == "ArrowLeft")vx = 0;
-    if(e.code == 'KeyS' || e.code == "ArrowDown")vy = 0;
-    if (e.code == 'KeyW' || e.code == "ArrowUp") {
-        vy = 5;
-    }
+    if(e.code == 'KeyD' || e.code == "ArrowRight") vx = 0;
+    if(e.code == 'KeyA' || e.code == "ArrowLeft") vx = 0;
+    if(e.code == 'KeyS' || e.code == "ArrowDown") vy = 0;
 });
 
 
