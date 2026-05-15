@@ -7,7 +7,16 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <div id="hud"><span id="livesDisplay">Lives: 3</span><span id="ballDisplay">Pokeballs: 0/20</span></div>
   <canvas id="gameCanvas" width="900" height="500"></canvas>
+  <div id="winOverlay">
+    <h1>You Win</h1>
+    <p>All 20 Pokeballs collected!</p>
+    <div id="winButtons">
+      <button onclick="restartGame()">Play Again</button>
+      <button onclick="nextLevel()">Next Level</button>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
