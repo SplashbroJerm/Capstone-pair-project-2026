@@ -1,6 +1,14 @@
 const squirtleImg = new Image();
 squirtleImg.src = 'squirtle-sprite2.png';
 
+let playerImg = squirtleImg;
+const _savedSprite = localStorage.getItem('outfit_sprite');
+if (_savedSprite) {
+  const _customImg = new Image();
+  _customImg.onload = () => { playerImg = _customImg; };
+  _customImg.src = _savedSprite;
+}
+
 const platImg = new Image();
 platImg.src = 'pika-plat.png';
 
@@ -32,7 +40,7 @@ const ENEMY_DEFS=[
   {x:700, y:118,vx:1,   w:32,h:32,patrol:{min:580, max:900}},
 ];
 const POKEBALL_DEFS=[
-  {x:100,y:410,r:12},{x:240,y:340,r:12},{x:280,y:340,r:12},{x:400,y:230,r:12},
+  {x:200,y:410,r:12},{x:240,y:340,r:12},{x:280,y:340,r:12},{x:400,y:230,r:12},
   {x:550,y:230,r:12},{x:735,y:120,r:12},{x:700,y:120,r:12},{x:710,y:310,r:12},
   {x:850,y:250,r:12},{x:850,y:150,r:12},{x:1000,y:190,r:12},{x:1030,y:190,r:12},
   {x:1200,y:270,r:12},{x:1360,y:220,r:12},{x:1540,y:300,r:12},{x:1710,y:240,r:12},
@@ -64,6 +72,8 @@ function resetLevel(){
   enemies=ENEMY_DEFS.map(e=>({...e,alive:true}));
   pokeballs=POKEBALL_DEFS.map(b=>({...b,collected:false}));
   P.x=80;P.y=360;P.vx=0;P.vy=0;P.inv=0;cam.x=0;completing=false;
+  document.getElementById('ballDisplay').textContent='Pokeballs: 0/20';
+  document.getElementById('livesDisplay').textContent='Lives: 3';
 }
 
 const gravity   = 0.55;
@@ -108,6 +118,7 @@ function update(){
   for(const b of pokeballs){
     if(!b.collected && Math.hypot(P.x+18-b.x, P.y+28-b.y) < 26){
       b.collected=true;
+      document.getElementById('ballDisplay').textContent='Pokeballs: '+pokeballs.filter(b=>b.collected).length+'/20';
     }
   }
   if(!completing && pokeballs.every(b=>b.collected)){completing=true;setTimeout(showComplete,400);return;}
@@ -164,9 +175,9 @@ function drawPlayer(){
   if(facing==='left'){
     ctx.translate(drawX+drawW, drawY);
     ctx.scale(-1,1);
-    ctx.drawImage(squirtleImg, 0, 0, drawW, drawH);
+    ctx.drawImage(playerImg, 0, 0, drawW, drawH);
   } else {
-    ctx.drawImage(squirtleImg, drawX, drawY, drawW, drawH);
+    ctx.drawImage(playerImg, drawX, drawY, drawW, drawH);
   }
   ctx.restore();
 }
@@ -175,9 +186,20 @@ function loseLife(){
   lives--;
   if(lives<=0){ lives=3; resetLevel(); }
   else { P.x=80; P.y=360; P.vx=0; P.vy=0; P.inv=120; cam.x=0; }
+  document.getElementById('livesDisplay').textContent='Lives: '+lives;
 }
 
-function showComplete(){ lives=3; resetLevel(); }
+function showComplete(){
+  document.getElementById('winOverlay').style.display='flex';
+}
+function restartGame(){
+  document.getElementById('winOverlay').style.display='none';
+  lives=3; resetLevel();
+}
+function nextLevel(){
+  document.getElementById('winOverlay').style.display='none';
+  lives=3; resetLevel();
+}
 
 function loop(){
   update();draw();
