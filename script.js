@@ -10,48 +10,89 @@ if (_savedSprite) {
 }
 
 const platImg = new Image();
-platImg.src = 'pika-plat.png';
+platImg.src = 'pixil-frame-2.png';
 
 const pokeballImg = new Image();
 pokeballImg.src = 'pokeballs.PNG';
 
-const enemyImg = new Image();
-enemyImg.src = 'enemy.PNG';
+const ENEMY_SOURCES = [
+    'enemy.PNG',
+    'iggly-pokm.png',
+    'ditto-pokm.png',
+    'lit-pokm.png',
+    'pika-enemy.png'
+];
+
+const enemyImages = ENEMY_SOURCES.map(src => {
+    const img = new Image();
+    img.src = src;
+    return img;
+})
 
 const levelW=2600;
-const PLATFORMS=[
-  {x:0,   y:440,w:2600,h:60},
-  {x:180, y:370,w:120, h:16},{x:350, y:310,w:100,h:16},
-  {x:500, y:260,w:110, h:16},{x:660, y:340,w:90, h:16},
-  {x:800, y:280,w:130, h:16},{x:980, y:220,w:120,h:16},
-  {x:1150,y:300,w:100, h:16},{x:1310,y:250,w:130,h:16},
-  {x:1490,y:330,w:110, h:16},{x:1660,y:270,w:120,h:16},
-  {x:1820,y:220,w:100, h:16},{x:1990,y:290,w:130,h:16},
-  {x:2150,y:360,w:110, h:16},{x:2320,y:290,w:150,h:16},
-  {x:580, y:180,w:70,  h:16},{x:700, y:150,w:70, h:16},{x:820,y:180,w:70,h:16},
-];
-const ENEMY_DEFS=[
-  {x:320, y:408,vx:1.5, w:32,h:32,patrol:{min:180, max:480}},
-  {x:680, y:408,vx:-1.2,w:32,h:32,patrol:{min:500, max:820}},
-  {x:1060,y:408,vx:1.8, w:32,h:32,patrol:{min:820, max:1180}},
-  {x:1430,y:408,vx:-1.5,w:32,h:32,patrol:{min:1180,max:1540}},
-  {x:1750,y:408,vx:1.2, w:32,h:32,patrol:{min:1540,max:1900}},
-  {x:2100,y:408,vx:-1.8,w:32,h:32,patrol:{min:1900,max:2350}},
-  {x:700, y:118,vx:1,   w:32,h:32,patrol:{min:580, max:900}},
-];
-const POKEBALL_DEFS=[
-  {x:200,y:410,r:12},{x:240,y:340,r:12},{x:280,y:340,r:12},{x:400,y:230,r:12},
-  {x:550,y:230,r:12},{x:735,y:120,r:12},{x:700,y:120,r:12},{x:710,y:310,r:12},
-  {x:850,y:250,r:12},{x:850,y:150,r:12},{x:1000,y:190,r:12},{x:1030,y:190,r:12},
-  {x:1200,y:270,r:12},{x:1360,y:220,r:12},{x:1540,y:300,r:12},{x:1710,y:240,r:12},
-  {x:1870,y:190,r:12},{x:2040,y:260,r:12},{x:2200,y:330,r:12},{x:2380,y:260,r:12},
-];
+const LEVELS = {
+    1: {
+        platforms: [ 
+            {x:0, y:440,w:2600,h:60}, 
+            {x:180, y:370,w:120, h:30},{x:350, y:310,w:100,h:30}, 
+            {x:500, y:260,w:110, h:30},{x:660, y:340,w:90, h:30}, 
+            {x:980, y:220,w:120,h:30}, 
+            {x:1150,y:300,w:100, h:30},{x:1310,y:250,w:130,h:30}, 
+            {x:1490,y:330,w:110, h:30},{x:1660,y:270,w:120,h:30}, 
+            {x:1820,y:220,w:100, h:30},{x:1990,y:290,w:130,h:30}, 
+            {x:2150,y:360,w:110, h:30},{x:2320,y:290,w:150,h:30}, 
+            {x:580, y:180,w:70, h:30},{x:700, y:150,w:70, h:30},{x:820,y:180,w:70,h:30}, 
+        ],
+        enemies: [
+            {x:320, y:408,vx:1.5, w:32,h:32,patrol:{min:180, max:480}}, 
+            {x:680, y:408,vx:-1.2,w:32,h:32,patrol:{min:500, max:820}}, 
+            {x:1060,y:408,vx:1.8, w:32,h:32,patrol:{min:820, max:1180}}, 
+            {x:1430,y:408,vx:-1.5,w:32,h:32,patrol:{min:1180,max:1540}}, 
+            {x:1750,y:408,vx:1.2, w:32,h:32,patrol:{min:1540,max:1900}}, 
+            {x:2100,y:408,vx:-1.8,w:32,h:32,patrol:{min:1900,max:2350}}, 
+            {x:700, y:118,vx:1, w:32,h:32,patrol:{min:580, max:900}}, 
+        ],
+        pokeballs: [
+            {x:500,y:410,r:12},{x:240,y:340,r:12},{x:280,y:340,r:12},{x:400,y:230,r:12}, 
+            {x:550,y:230,r:12},{x:735,y:120,r:12},{x:700,y:120,r:12},{x:710,y:310,r:12}, 
+            {x:850,y:410,r:12},{x:850,y:150,r:12},{x:1000,y:190,r:12},{x:1030,y:190,r:12}, 
+            {x:1200,y:270,r:12},{x:1360,y:220,r:12},{x:1540,y:300,r:12},{x:1710,y:240,r:12}, 
+            {x:1870,y:190,r:12},{x:2040,y:260,r:12},{x:2200,y:330,r:12},{x:2380,y:260,r:12}, 
+        ]
+    },
+    2: {
+        
+        platforms: [
+            {x:0, y:440,w:2600,h:60},
+            {x:150, y:350,w:100, h:30},{x:300, y:270,w:100, h:30},{x:450, y:200,w:100, h:30},
+            {x:650, y:300,w:150, h:30},{x:850, y:360,w:120, h:30},{x:1050,y:280,w:100, h:30},
+            {x:1200,y:200,w:80,  h:30},{x:1350,y:280,w:120, h:30},{x:1550,y:350,w:150, h:30},
+            {x:1750,y:260,w:100, h:30},{x:1900,y:190,w:120, h:30},{x:2100,y:270,w:100, h:30},
+            {x:2250,y:350,w:150, h:30}
+        ],
+        enemies: [
+            {x:480, y:168,vx:2.2, w:32,h:32,patrol:{min:450, max:550}},
+            {x:700, y:268,vx:-2.0,w:32,h:32,patrol:{min:650, max:800}},
+            {x:1100,y:408,vx:2.5, w:32,h:32,patrol:{min:900, max:1400}},
+            {x:1600,y:318,vx:-1.8,w:32,h:32,patrol:{min:1550,max:1700}},
+            {x:1950,y:158,vx:2.0, w:32,h:32,patrol:{min:1900,max:2020}},
+            {x:2200,y:408,vx:-3.0,w:32,h:32,patrol:{min:1800,max:2500}}
+        ],
+        pokeballs: [
+            {x:180,y:320,r:12},{x:330,y:240,r:12},{x:480,y:170,r:12},{x:720,y:270,r:12},
+            {x:910,y:330,r:12},{x:1070,y:250,r:12},{x:1220,y:170,r:12},{x:1410,y:250,r:12},
+            {x:1620,y:320,r:12},{x:1770,y:230,r:12},{x:1960,y:160,r:12},{x:2120,y:240,r:12},
+          
+        ]
+    }
+};
 
 const canvas=document.getElementById('gameCanvas');
 const ctx=canvas.getContext('2d');
 const W=canvas.width;
 const H=canvas.height;
 
+let currentLevel = 1;
 let lives=3;
 let platforms=[];
 let enemies=[];
@@ -59,7 +100,20 @@ let pokeballs=[];
 let completing=false;
 const cam={x:0};
 
-const P={x:80,y:360,vx:0,vy:0,w:36,h:56,onGround:false,facing:'right',inv:0};
+let particles = [];
+
+let startTime = 0;
+let elapsedTime = 0;
+
+const ballDisp = document.getElementById('ballDisplay');
+const livesDisp = document.getElementById('livesDisplay');
+const timerDisp = document.getElementById('timerDisplay');
+
+if (ballDisp) ballDisp.textContent = 'Pokeballs: 0/20'; 
+if (livesDisp) livesDisp.textContent = 'Lives: 3'; 
+if (timerDisp) timerDisp.textContent = 'Time: 00:00';
+
+const P={x:80,y:340,vx:0,vy:0,w:32,h:92,onGround:false,facing:'right',inv:0};
 const keys={};
 document.addEventListener('keydown',e=>{
   keys[e.key]=true;
@@ -67,13 +121,77 @@ document.addEventListener('keydown',e=>{
 });
 document.addEventListener('keyup',e=>keys[e.key]=false);
 
-function resetLevel(){
-  platforms=PLATFORMS.map(p=>({...p}));
-  enemies=ENEMY_DEFS.map(e=>({...e,alive:true}));
-  pokeballs=POKEBALL_DEFS.map(b=>({...b,collected:false}));
-  P.x=80;P.y=360;P.vx=0;P.vy=0;P.inv=0;cam.x=0;completing=false;
-  document.getElementById('ballDisplay').textContent='Pokeballs: 0/20';
-  document.getElementById('livesDisplay').textContent='Lives: 3';
+function formatTime(ms) {
+    const totalSecs = Math.floor(ms / 1000);
+    const mins = Math.floor(totalSecs / 60);
+    const secs = totalSecs % 60;
+    const millies = Math.floor((ms % 1000) / 10);
+    
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${millies.toString().padStart(2, '0')}`;
+}
+
+function createExplosion(x, y) {
+    const particleCount = 15;
+    const colors = ['#FF4500', '#FFA500', '#FFD700', '#FF3333']; // Fire and smoke color tones
+    
+    for (let i = 0; i < particleCount; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1 + Math.random() * 4;
+        
+        particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 1, // Slight upward trajectory bump
+            color: colors[Math.floor(Math.random() * colors.length)],
+            radius: 2 + Math.random() * 4,
+            alpha: 1,
+            life: 25 + Math.random() * 15 // Ticks/Frames before fading completely
+        });
+    }
+}
+function updateEnemyDisplay() {
+    const enemyDisp = document.getElementById('enemyDisplay');
+    if (enemyDisp) {
+        if (currentLevel === 2) {
+            const defeated = enemies.filter(e => !e.alive).length;
+            enemyDisp.style.display = 'block';
+            enemyDisp.textContent = `Enemies: ${defeated}/${enemies.length}`;
+            enemyDisp.style.color = defeated === enemies.length ? '#4CAF50' : '#FF9800';
+        } else {
+            enemyDisp.style.display = 'none'; // Hidden on Level 1
+        }
+    }
+}
+
+
+function resetLevel() { 
+    const data = LEVELS[currentLevel] || LEVELS[1];
+
+    platforms = data.platforms.map(p => ({...p})); 
+    
+    enemies = data.enemies.map(e => {
+        const randImg = enemyImages[Math.floor(Math.random() * enemyImages.length)];
+        return {...e, alive: true, deathTimer: 0, img: randImg};
+    });
+    
+    pokeballs = data.pokeballs.map(b => ({...b,collected:false})); 
+    particles = [];
+    P.x = 80; P.y = 360; P.vx = 0; P.vy = 0; P.inv = 0; cam.x = 0; completing = false; 
+    
+    startTime = performance.now();
+    elapsedTime = 0;
+
+    const ballDisp = document.getElementById('ballDisplay');
+    const livesDisp = document.getElementById('livesDisplay');
+    const timerDisp = document.getElementById('timerDisplay');
+    const currentLvlDisp = document.getElementById('currentLevelDisplay');
+    
+    if (ballDisp) ballDisp.textContent = `Pokeballs: 0/${pokeballs.length}`; 
+    if (livesDisp) livesDisp.textContent = 'Lives: ' + lives; 
+    if (timerDisp) timerDisp.textContent = 'Time: 00:00.00';
+    if (currentLvlDisp) currentLvlDisp.textContent = 'Level: ' + currentLevel;
+    updateEnemyDisplay();
 }
 
 const gravity   = 0.55;
@@ -87,7 +205,23 @@ function overlap(a, b) {
   return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
 }
 
+function checkWinCondition() {
+    const allBallsCollected = pokeballs.every(b => b.collected);
+    
+    if (currentLevel === 2) {
+        const allEnemiesDefeated = enemies.every(e => !e.alive);
+        return allBallsCollected && allEnemiesDefeated;
+    }
+  
+    return allBallsCollected;
+}
+
 function update(){
+    if (!completing) {
+        elapsedTime = performance.now() - startTime;
+        const timerDisp = document.getElementById('timerDisplay');
+        if (timerDisp) timerDisp.textContent = 'Time: ' + formatTime(elapsedTime);
+    }
   if (keys['ArrowLeft']  || keys['a'] || keys['A']) { P.vx = -moveSpeed; P.facing = 'left'; }
   else if (keys['ArrowRight'] || keys['d'] || keys['D']) { P.vx = moveSpeed; P.facing = 'right'; }
   else { P.vx *= P.onGround ? friction : airFric; if (Math.abs(P.vx) < 0.2) P.vx = 0; }
@@ -115,30 +249,56 @@ function update(){
     else if (min === right)             { P.x = p.x + p.w; P.vx = 0; }
   }
 
-  for(const b of pokeballs){
-    if(!b.collected && Math.hypot(P.x+18-b.x, P.y+28-b.y) < 26){
-      b.collected=true;
-      document.getElementById('ballDisplay').textContent='Pokeballs: '+pokeballs.filter(b=>b.collected).length+'/20';
-    }
-  }
-  if(!completing && pokeballs.every(b=>b.collected)){completing=true;setTimeout(showComplete,400);return;}
+  for(const b of pokeballs) { 
+        if (!b.collected && Math.hypot((P.x + P.w/2) - b.x, (P.y + P.h/2) - b.y) < 26) { 
+            b.collected = true; 
+            const ballDisp = document.getElementById('ballDisplay');
+            if (ballDisp) ballDisp.textContent = `Pokeballs: ${pokeballs.filter(b=>b.collected).length}/${pokeballs.length}`; 
+        } 
+    } 
+    
+    if(!completing && checkWinCondition()) { 
+        completing = true; 
+        setTimeout(showComplete, 400); 
+        return; 
+    } 
 
   if (P.inv > 0) P.inv--;
 
   for (const e of enemies) {
-    if (!e.alive) continue;
+    if (!e.alive) {
+        if (e.deathTimer > 0) e.deathTimer--;
+        continue;
+
+    } 
     e.x += e.vx;
     if (e.x < e.patrol.min || e.x + e.w > e.patrol.max) e.vx *= -1;
     if (P.inv > 0 || !overlap(P, e)) continue;
-    const stompedFromAbove = P.vy > 0 && P.y + P.h < e.y + e.h * 0.6;
-    if (stompedFromAbove) {
-      e.alive = false;
-      P.vy = jumpForce * 0.7;
-    } else {
+    const stompedFromAbove = P.vy > 0 && (P.y + P.h - P.vy) <= e.y + 10;
+    if (stompedFromAbove) { 
+            e.alive = false; 
+            e.deathTimer = 30;
+            createExplosion(e.x + e.w / 2, e.y + e.h / 2);
+            P.vy = jumpForce * 0.7;
+            updateEnemyDisplay();
+        } else {
       loseLife();
       return;
     }
   }
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+        const pt = particles[i];
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.vy += 0.05;
+        pt.life--;
+        pt.alpha = Math.max(0, pt.life / 40);
+        
+        if (pt.life <= 0) {
+            particles.splice(i, 1);
+        }
+    }
 
   cam.x = Math.max(0, Math.min(P.x - W/2 + P.w/2, levelW - W));
 }
@@ -150,6 +310,7 @@ function draw(){
 
   for(const p of platforms){
     if(p.x+p.w<cam.x||p.x>cam.x+W) continue;
+    if (p.w === 2600) continue;
     ctx.drawImage(platImg, p.x, p.y, p.w, p.h);
   }
 
@@ -158,48 +319,104 @@ function draw(){
     ctx.drawImage(pokeballImg, b.x-b.r, b.y-b.r, b.r*2, b.r*2);
   }
 
-  for(const e of enemies){
-    if(!e.alive||e.x+e.w<cam.x||e.x>cam.x+W)continue;
-    ctx.drawImage(enemyImg, e.x, e.y, e.w, e.h);
-  }
+  for(const e of enemies) { 
+        if(e.x+e.w<cam.x||e.x>cam.x+W) continue; 
+        
+        if (!e.alive) {
+            if (e.deathTimer > 0) {
+                ctx.save();
+                ctx.globalAlpha = e.deathTimer / 30; 
+                ctx.drawImage(e.img, e.x, e.y + (e.h - 8), e.w, 8);
+                ctx.restore();
+            }
+            continue;
+        }
+        
+        ctx.drawImage(e.img, e.x, e.y, e.w, e.h); 
+    } 
+    for (const pt of particles) {
+        if(pt.x < cam.x - 10 || pt.x > cam.x + W + 10) continue;
+        ctx.save();
+        ctx.globalAlpha = pt.alpha;
+        ctx.fillStyle = pt.color;
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, pt.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
 
   drawPlayer();
 }
 
-function drawPlayer(){
-  const{x,y,w,h,facing}=P;
-  ctx.save();
-  const drawW=72, drawH=72;
-  const drawX=x-(drawW-w)/2;
-  const drawY=y-(drawH-h);
-  if(facing==='left'){
-    ctx.translate(drawX+drawW, drawY);
-    ctx.scale(-1,1);
-    ctx.drawImage(playerImg, 0, 0, drawW, drawH);
-  } else {
-    ctx.drawImage(playerImg, drawX, drawY, drawW, drawH);
-  }
-  ctx.restore();
-}
+function drawPlayer() { 
+    const {x, y, w, h, facing} = P; 
+    ctx.save(); 
+    
+    
+    if (facing === 'left') { 
+        ctx.translate(x + w, y); 
+        ctx.scale(-1, 1); 
+        ctx.drawImage(playerImg, 0, 0, w, h); 
+    } else { 
+        ctx.drawImage(playerImg, x, y, w, h); 
+    } 
+    ctx.restore(); 
+} 
 
 function loseLife(){
   lives--;
-  if(lives<=0){ lives=3; resetLevel(); }
+  if(lives<=0){ lives=3; currentLevel = 1; resetLevel(); }
   else { P.x=80; P.y=360; P.vx=0; P.vy=0; P.inv=120; cam.x=0; }
   document.getElementById('livesDisplay').textContent='Lives: '+lives;
 }
 
-function showComplete(){
-  document.getElementById('winOverlay').style.display='flex';
-}
+function showComplete() { 
+    const winOverlay = document.getElementById('winOverlay');
+    if (winOverlay) {
+        winOverlay.style.display = 'flex'; 
+        
+   
+        let finalTimeDisp = document.getElementById('finalTimeDisplay');
+        if (!finalTimeDisp) {
+            finalTimeDisp = document.createElement('p');
+            finalTimeDisp.id = 'finalTimeDisplay';
+            finalTimeDisp.style.fontSize = '22px';
+            finalTimeDisp.style.margin = '10px 0';
+            finalTimeDisp.style.color = '#FFD700';
+            winOverlay.appendChild(finalTimeDisp);
+        }
+        finalTimeDisp.textContent = `Level ${currentLevel} Complete! Time: ${formatTime(elapsedTime)}`;
+        
+      
+        const nextBtn = document.getElementById('nextLevelBtn');
+        const winHeader = winOverlay.querySelector('h1');
+        
+        if (LEVELS[currentLevel + 1]) {
+            if (nextBtn) nextBtn.style.display = 'inline-block';
+            if (winHeader) winHeader.textContent = 'Stage Clear!';
+        } else {
+            
+            if (nextBtn) nextBtn.style.display = 'none';
+            if (winHeader) winHeader.textContent = 'Victory! Ultimate Champion!';
+        }
+    }
+} 
 function restartGame(){
   document.getElementById('winOverlay').style.display='none';
   lives=3; resetLevel();
+  currentLevel = 1;
 }
-function nextLevel(){
-  document.getElementById('winOverlay').style.display='none';
-  lives=3; resetLevel();
-}
+function nextLevel() { 
+    const winOverlay = document.getElementById('winOverlay');
+    if (winOverlay) winOverlay.style.display = 'none'; 
+    
+    if (LEVELS[currentLevel + 1]) {
+        currentLevel++;
+        resetLevel(); 
+    } else {
+        restartGame();
+    }
+} 
 
 function loop(){
   update();draw();
@@ -207,4 +424,14 @@ function loop(){
 }
 
 let loaded=0;
-[squirtleImg,platImg,pokeballImg,enemyImg].forEach(img=>img.onload=()=>{if(++loaded===4){resetLevel();loop();}});
+const coreAssets = [squirtleImg, platImg, pokeballImg, ...enemyImages];
+const totalRequired = coreAssets.length;
+
+coreAssets.forEach(img => {
+    img.onload = () => { 
+        if (++loaded === totalRequired) { 
+            resetLevel(); 
+            loop(); 
+        } 
+    };
+});
