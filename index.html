@@ -4,10 +4,16 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Platform time</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <div id="hud"><span id="livesDisplay">Lives: 3</span><span id="ballDisplay">Pokeballs: 0/20</span></div>
+  <div id="hud">
+    <span id="livesDisplay">💗 Lives: 3</span>
+    <span id="ballDisplay">Pokeballs: 0/20</span>
+    <span id="timerDisplay">Time: 00:00</span>
+    <span id="enemyDisplay" style="display: none; color: #FF9800;">Enemies: 0/6</span>
+    <span id="currentLevelDisplay">Level: 1</span>
+  </div>
   <canvas id="gameCanvas" width="900" height="500"></canvas>
   <div id="winOverlay">
     <h1>You Win</h1>
