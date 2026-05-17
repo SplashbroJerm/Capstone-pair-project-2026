@@ -12,8 +12,17 @@ if (_savedSprite) {
 const platImg = new Image();
 platImg.src = 'pixil-frame-2.png';
 
+const shortcakeImg = new Image();
+shortcakeImg.src = 'shortcake.png';
+
+const beeEnemyImg = new Image();
+beeEnemyImg.src = 'bee-enemy.png';
+
 const pokeballImg = new Image();
 pokeballImg.src = 'pokeballs.PNG';
+
+const strawberryImg = new Image();
+strawberryImg.src = 'strawberry.png';
 
 const ENEMY_SOURCES = [
     'enemy.PNG',
@@ -32,57 +41,55 @@ const enemyImages = ENEMY_SOURCES.map(src => {
 const levelW=2600;
 const LEVELS = {
     1: {
-        platforms: [ 
-            {x:0, y:440,w:2600,h:60}, 
-            {x:180, y:370,w:120, h:30},{x:350, y:310,w:100,h:30}, 
-            {x:500, y:260,w:110, h:30},{x:660, y:340,w:90, h:30}, 
-            {x:980, y:220,w:120,h:30}, 
-            {x:1150,y:300,w:100, h:30},{x:1310,y:250,w:130,h:30}, 
-            {x:1490,y:330,w:110, h:30},{x:1660,y:270,w:120,h:30}, 
-            {x:1820,y:220,w:100, h:30},{x:1990,y:290,w:130,h:30}, 
-            {x:2150,y:360,w:110, h:30},{x:2320,y:290,w:150,h:30}, 
-            {x:580, y:180,w:70, h:30},{x:700, y:150,w:70, h:30},{x:820,y:180,w:70,h:30}, 
+        platforms: [
+            {x:0,    y:420,w:2600,h:60},
+            {x:180,  y:350,w:120, h:30},{x:350, y:290,w:100,h:30},
+            {x:500,  y:240,w:110, h:30},{x:660, y:320,w:90, h:30},
+            {x:980,  y:200,w:120, h:30},
+            {x:1150, y:280,w:100, h:30},{x:1310,y:230,w:130,h:30},
+            {x:1490, y:310,w:110, h:30},{x:1660,y:250,w:120,h:30},
+            {x:1820, y:200,w:100, h:30},{x:1990,y:270,w:130,h:30},
+            {x:2150, y:340,w:110, h:30},{x:2320,y:270,w:150,h:30},
+            {x:580,  y:160,w:70,  h:30},{x:700, y:130,w:70, h:30},{x:820,y:160,w:70,h:30},
         ],
         enemies: [
-            {x:320, y:408,vx:1.5, w:32,h:32,patrol:{min:180, max:480}}, 
-            {x:680, y:408,vx:-1.2,w:32,h:32,patrol:{min:500, max:820}}, 
-            {x:1060,y:408,vx:1.8, w:32,h:32,patrol:{min:820, max:1180}}, 
-            {x:1430,y:408,vx:-1.5,w:32,h:32,patrol:{min:1180,max:1540}}, 
-            {x:1750,y:408,vx:1.2, w:32,h:32,patrol:{min:1540,max:1900}}, 
-            {x:2100,y:408,vx:-1.8,w:32,h:32,patrol:{min:1900,max:2350}}, 
-            {x:700, y:118,vx:1, w:32,h:32,patrol:{min:580, max:900}}, 
+            {x:320, y:388,vx:1.5, w:32,h:32,patrol:{min:180, max:480}},
+            {x:680, y:388,vx:-1.2,w:32,h:32,patrol:{min:500, max:820}},
+            {x:1060,y:388,vx:1.8, w:32,h:32,patrol:{min:820, max:1180}},
+            {x:1430,y:388,vx:-1.5,w:32,h:32,patrol:{min:1180,max:1540}},
+            {x:1750,y:388,vx:1.2, w:32,h:32,patrol:{min:1540,max:1900}},
+            {x:2100,y:388,vx:-1.8,w:32,h:32,patrol:{min:1900,max:2350}},
+            {x:700, y:98, vx:1,   w:32,h:32,patrol:{min:580, max:900}},
         ],
         pokeballs: [
-            {x:500,y:410,r:12},{x:240,y:340,r:12},{x:280,y:340,r:12},{x:400,y:230,r:12}, 
-            {x:550,y:230,r:12},{x:735,y:120,r:12},{x:700,y:120,r:12},{x:710,y:310,r:12}, 
-            {x:850,y:410,r:12},{x:850,y:150,r:12},{x:1000,y:190,r:12},{x:1030,y:190,r:12}, 
-            {x:1200,y:270,r:12},{x:1360,y:220,r:12},{x:1540,y:300,r:12},{x:1710,y:240,r:12}, 
-            {x:1870,y:190,r:12},{x:2040,y:260,r:12},{x:2200,y:330,r:12},{x:2380,y:260,r:12}, 
+            {x:500, y:390,r:12},{x:240,y:320,r:12},{x:280,y:320,r:12},{x:400,y:210,r:12},
+            {x:550, y:210,r:12},{x:735,y:100,r:12},{x:700,y:100,r:12},{x:710,y:290,r:12},
+            {x:850, y:390,r:12},{x:850,y:130,r:12},{x:1000,y:170,r:12},{x:1030,y:170,r:12},
+            {x:1200,y:250,r:12},{x:1360,y:200,r:12},{x:1540,y:280,r:12},{x:1710,y:220,r:12},
+            {x:1870,y:170,r:12},{x:2040,y:240,r:12},{x:2200,y:310,r:12},{x:2380,y:240,r:12},
         ]
     },
     2: {
-        
         platforms: [
-            {x:0, y:440,w:2600,h:60},
-            {x:150, y:350,w:100, h:30},{x:300, y:270,w:100, h:30},{x:450, y:200,w:100, h:30},
-            {x:650, y:300,w:150, h:30},{x:850, y:360,w:120, h:30},{x:1050,y:280,w:100, h:30},
-            {x:1200,y:200,w:80,  h:30},{x:1350,y:280,w:120, h:30},{x:1550,y:350,w:150, h:30},
-            {x:1750,y:260,w:100, h:30},{x:1900,y:190,w:120, h:30},{x:2100,y:270,w:100, h:30},
-            {x:2250,y:350,w:150, h:30}
+            {x:0,    y:420,w:2600,h:60},
+            {x:150,  y:330,w:100, h:30},{x:300, y:250,w:100, h:30},{x:450, y:180,w:100, h:30},
+            {x:650,  y:280,w:150, h:30},{x:850, y:340,w:120, h:30},{x:1050,y:260,w:100, h:30},
+            {x:1200, y:180,w:80,  h:30},{x:1350,y:260,w:120, h:30},{x:1550,y:330,w:150, h:30},
+            {x:1750, y:240,w:100, h:30},{x:1900,y:170,w:120, h:30},{x:2100,y:250,w:100, h:30},
+            {x:2250, y:330,w:150, h:30}
         ],
         enemies: [
-            {x:480, y:168,vx:2.2, w:32,h:32,patrol:{min:450, max:550}},
-            {x:700, y:268,vx:-2.0,w:32,h:32,patrol:{min:650, max:800}},
-            {x:1100,y:408,vx:2.5, w:32,h:32,patrol:{min:900, max:1400}},
-            {x:1600,y:318,vx:-1.8,w:32,h:32,patrol:{min:1550,max:1700}},
-            {x:1950,y:158,vx:2.0, w:32,h:32,patrol:{min:1900,max:2020}},
-            {x:2200,y:408,vx:-3.0,w:32,h:32,patrol:{min:1800,max:2500}}
+            {x:480, y:148,vx:2.2, w:32,h:32,patrol:{min:450, max:550}},
+            {x:700, y:248,vx:-2.0,w:32,h:32,patrol:{min:650, max:800}},
+            {x:1100,y:388,vx:2.5, w:32,h:32,patrol:{min:900, max:1400}},
+            {x:1600,y:298,vx:-1.8,w:32,h:32,patrol:{min:1550,max:1700}},
+            {x:1950,y:138,vx:2.0, w:32,h:32,patrol:{min:1900,max:2020}},
+            {x:2200,y:388,vx:-3.0,w:32,h:32,patrol:{min:1800,max:2500}}
         ],
         pokeballs: [
-            {x:180,y:320,r:12},{x:330,y:240,r:12},{x:480,y:170,r:12},{x:720,y:270,r:12},
-            {x:910,y:330,r:12},{x:1070,y:250,r:12},{x:1220,y:170,r:12},{x:1410,y:250,r:12},
-            {x:1620,y:320,r:12},{x:1770,y:230,r:12},{x:1960,y:160,r:12},{x:2120,y:240,r:12},
-          
+            {x:180, y:300,r:12},{x:330,y:220,r:12},{x:480,y:150,r:12},{x:720, y:250,r:12},
+            {x:910, y:310,r:12},{x:1070,y:230,r:12},{x:1220,y:150,r:12},{x:1410,y:230,r:12},
+            {x:1620,y:300,r:12},{x:1770,y:210,r:12},{x:1960,y:140,r:12},{x:2120,y:220,r:12},
         ]
     }
 };
@@ -113,7 +120,7 @@ if (ballDisp) ballDisp.textContent = 'Pokeballs: 0/20';
 if (livesDisp) livesDisp.textContent = 'Lives: 3'; 
 if (timerDisp) timerDisp.textContent = 'Time: 00:00';
 
-const P={x:80,y:340,vx:0,vy:0,w:32,h:92,onGround:false,facing:'right',inv:0};
+const P={x:80,y:320,vx:0,vy:0,w:42,h:92,onGround:false,facing:'right',inv:0};
 const keys={};
 document.addEventListener('keydown',e=>{
   keys[e.key]=true;
@@ -132,7 +139,9 @@ function formatTime(ms) {
 
 function createExplosion(x, y) {
     const particleCount = 15;
-    const colors = ['#FF4500', '#FFA500', '#FFD700', '#FF3333']; // Fire and smoke color tones
+    const colors = currentLevel === 2
+        ? ['#FF69B4', '#FF1493', '#FFB6C1', '#FF85C0']
+        : ['#FF4500', '#FFA500', '#FFD700', '#FF3333'];
     
     for (let i = 0; i < particleCount; i++) {
         const angle = Math.random() * Math.PI * 2;
@@ -171,13 +180,13 @@ function resetLevel() {
     platforms = data.platforms.map(p => ({...p})); 
     
     enemies = data.enemies.map(e => {
-        const randImg = enemyImages[Math.floor(Math.random() * enemyImages.length)];
+        const randImg = currentLevel === 2 ? beeEnemyImg : enemyImages[Math.floor(Math.random() * enemyImages.length)];
         return {...e, alive: true, deathTimer: 0, img: randImg};
     });
     
     pokeballs = data.pokeballs.map(b => ({...b,collected:false})); 
     particles = [];
-    P.x = 80; P.y = 360; P.vx = 0; P.vy = 0; P.inv = 0; cam.x = 0; completing = false; 
+    P.x = 80; P.y = 320; P.vx = 0; P.vy = 0; P.inv = 0; cam.x = 0; completing = false;
     
     startTime = performance.now();
     elapsedTime = 0;
@@ -192,6 +201,7 @@ function resetLevel() {
     if (timerDisp) timerDisp.textContent = 'Time: 00:00.00';
     if (currentLvlDisp) currentLvlDisp.textContent = 'Level: ' + currentLevel;
     updateEnemyDisplay();
+    canvas.style.backgroundImage = currentLevel === 2 ? "url('bg-2.png')" : "url('bg-1.jpg')";
 }
 
 const gravity   = 0.55;
@@ -305,18 +315,21 @@ function update(){
 
 function draw(){
   ctx.setTransform(1,0,0,1,0,0);
+  ctx.imageSmoothingEnabled = false;
   ctx.clearRect(0,0,W,H);
   ctx.setTransform(1,0,0,1,-cam.x,0);
 
+  const currentPlatImg = currentLevel === 2 ? shortcakeImg : platImg;
   for(const p of platforms){
     if(p.x+p.w<cam.x||p.x>cam.x+W) continue;
     if (p.w === 2600) continue;
-    ctx.drawImage(platImg, p.x, p.y, p.w, p.h);
+    ctx.drawImage(currentPlatImg, p.x, p.y, p.w, p.h);
   }
 
   for(const b of pokeballs){
     if(b.collected||b.x<cam.x-30||b.x>cam.x+W+30)continue;
-    ctx.drawImage(pokeballImg, b.x-b.r, b.y-b.r, b.r*2, b.r*2);
+    const collectibleImg = currentLevel === 2 ? strawberryImg : pokeballImg;
+    ctx.drawImage(collectibleImg, b.x-b.r, b.y-b.r, b.r*2, b.r*2);
   }
 
   for(const e of enemies) { 
@@ -365,9 +378,15 @@ function drawPlayer() {
 
 function loseLife(){
   lives--;
-  if(lives<=0){ lives=3; currentLevel = 1; resetLevel(); }
-  else { P.x=80; P.y=360; P.vx=0; P.vy=0; P.inv=120; cam.x=0; }
   document.getElementById('livesDisplay').textContent='Lives: '+lives;
+  if(lives<=0){
+    const overlay = document.getElementById('gameOverOverlay');
+    const timeEl = document.getElementById('gameOverTime');
+    if(timeEl) timeEl.textContent = 'Time: ' + formatTime(elapsedTime);
+    if(overlay) overlay.style.display='flex';
+  } else {
+    P.x=80; P.y=320; P.vx=0; P.vy=0; P.inv=120; cam.x=0;
+  }
 }
 
 function showComplete() { 
@@ -403,8 +422,8 @@ function showComplete() {
 } 
 function restartGame(){
   document.getElementById('winOverlay').style.display='none';
-  lives=3; resetLevel();
-  currentLevel = 1;
+  document.getElementById('gameOverOverlay').style.display='none';
+  lives=3; currentLevel=1; resetLevel();
 }
 function nextLevel() { 
     const winOverlay = document.getElementById('winOverlay');
